@@ -4,6 +4,7 @@ import com.assignment.newtunes.models.Customer;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,5 +73,24 @@ class NewTunesDAOTest {
 
         //Assert
         assertEquals(expected.toString(),actual.toString());
+    }
+    @Test
+    void getOnePageOfCustomers_setLimitAndOffsetToFive_returnCustomersWithIdsBetweenSixAndTen(){
+        //Prepare
+        String url = "jdbc:postgresql://localhost:5432/chinook";
+        String username = "postgres";
+        String password = "jani";
+        NewTunesDAO ntDAO = new NewTunesDAO(url,username,password);
+        int limit = 5;
+        int offset = 5;
+        List<Integer> expected = new ArrayList(Arrays.asList(6,7,8,9,10));
+
+        //Act
+        List <Customer> customers = ntDAO.getOnePageOfCustomers(5,5);
+        List<Integer> actual = new ArrayList();
+        customers.forEach(c-> actual.add(c.id()));
+
+        //Assert
+        assertEquals(expected,actual);
     }
 }
