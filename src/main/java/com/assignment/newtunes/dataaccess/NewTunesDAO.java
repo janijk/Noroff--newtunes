@@ -27,6 +27,7 @@ public class NewTunesDAO {
         this.password = password;
     }
 
+    // Get all customers from db
     public List<Customer> getAllCustomers(){
         String sql = "SELECT customer_id, first_name, last_name, country, postal_code, phone, email FROM customer";
         List<Customer> customers = new ArrayList<>();
@@ -50,4 +51,33 @@ public class NewTunesDAO {
         }
         return customers;
     }
+
+    // Get a specific customer from db identified by customer id
+    public Customer getCustomerById(int customerId){
+        String sql = "SELECT customer_id, first_name, last_name, country, postal_code, phone, email "+
+                "FROM customer WHERE customer_id=?";
+        Customer customer = null;
+        try (Connection con = DriverManager.getConnection(url, username, password)) {
+            PreparedStatement ppsm = con.prepareStatement(sql);
+            ppsm.setInt(1, customerId);
+            ResultSet rs = ppsm.executeQuery();
+            while (rs.next()){
+                customer = new Customer(
+                        rs.getInt("customer_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("country"),
+                        rs.getString("postal_code"),
+                        rs.getString("phone"),
+                        rs.getString("email")
+                );
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
+    
 }
