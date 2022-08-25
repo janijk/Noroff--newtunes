@@ -1,5 +1,7 @@
 package com.assignment.newtunes.repositories;
 
-public interface CustomerRepository extends CRUDRepository {
+import com.assignment.newtunes.models.Customer;
+
+public interface CustomerRepository extends CRUDRepository <Customer,Integer> {
 
 }
