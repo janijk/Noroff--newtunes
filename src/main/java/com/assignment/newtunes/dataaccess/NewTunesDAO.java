@@ -134,7 +134,7 @@ public class NewTunesDAO {
         return customers;
     }
 
-    // Add a customer to db using takes Customer as parameter
+    // Add a customer to db, takes Customer as parameter
     public int addCustomer(Customer customer){
         String sql = "INSERT INTO customer (first_name, last_name, country, postal_code, phone, email)"+
                 "VALUES (?,?,?,?,?,?)";
