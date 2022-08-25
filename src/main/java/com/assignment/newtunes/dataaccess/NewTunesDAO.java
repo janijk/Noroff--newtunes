@@ -71,7 +71,6 @@ public class NewTunesDAO {
                         rs.getString("phone"),
                         rs.getString("email")
                 );
-
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -79,5 +78,31 @@ public class NewTunesDAO {
         return customer;
     }
 
-    
+    // Get a specific customer from db identified by customers %first name% or %last name%
+    public List<Customer> getCustomerByName(String customerName){
+        String sql = "SELECT customer_id, first_name, last_name, country, postal_code, phone, email "+
+                "FROM customer WHERE first_name LIKE ? OR last_name LIKE ?";
+        List<Customer> customers = new ArrayList<>();
+        try (Connection con = DriverManager.getConnection(url, username, password)) {
+            PreparedStatement ppsm = con.prepareStatement(sql);
+            ppsm.setString(1, "%"+customerName+"%");
+            ppsm.setString(2, "%"+customerName+"%");
+            ResultSet rs = ppsm.executeQuery();
+            while (rs.next()){
+                Customer cust = new Customer(
+                        rs.getInt("customer_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("country"),
+                        rs.getString("postal_code"),
+                        rs.getString("phone"),
+                        rs.getString("email")
+                );
+                customers.add(cust);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return customers;
+    }
 }
