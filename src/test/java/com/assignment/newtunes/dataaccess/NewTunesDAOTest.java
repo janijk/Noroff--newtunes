@@ -93,4 +93,28 @@ class NewTunesDAOTest {
         //Assert
         assertEquals(expected,actual);
     }
+    @Test
+    void addCustomer_insertProvidedCustomerIntoDbIdAutoIncrements_customerIsAddedToDB(){
+        //Prepare
+        String url = "jdbc:postgresql://localhost:5432/chinook";
+        String username = "postgres";
+        String password = "jani";
+        NewTunesDAO ntDAO = new NewTunesDAO(url,username,password);
+        Customer customer = new Customer(
+                0,
+                "Jane",
+                "Doe",
+                "UK",
+                "11111-000",
+                "+44 (12) 3923-5555",
+                "jane.doe@anon.com"
+        );
+        int expected = 1;
+
+        //Act
+        int actual = ntDAO.addCustomer(customer);
+
+        //Assert
+        assertEquals(expected,actual);
+    }
 }
