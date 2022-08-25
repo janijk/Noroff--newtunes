@@ -1,9 +1,13 @@
 stages:
-  - build
+  -build
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: always
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: always
 
 build:
   stage: build
-  script:
-    -echo "Building"
-  only:
-    - main
+  script: echo "Building"

@@ -12,17 +12,6 @@ import java.util.List;
 public class CustomerRepositoryImpl implements CustomerRepository {
     @Autowired
     NewTunesDAO newTunesDAO;
-    private final String url;
-    private final String username;
-    private final String password;
-    public CustomerRepositoryImpl(
-            @Value("${spring.datasource.url}") String url,
-            @Value("${spring.datasource.username}") String username,
-            @Value("${spring.datasource.password}") String password) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
-    }
 
 
     @Override                   //Add customer to db, returns 0 if failed, 1 if success

@@ -9,8 +9,6 @@ public class NewtunesApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NewtunesApplication.class, args);
-		//NewTunesDAO ntDAO = new NewTunesDAO("jdbc:postgresql://localhost:5432/chinook","postgres","jani");
-		//ntDAO.getAllCustomers().stream().forEach(customer -> System.out.println(customer.toString()));
 	}
 
 }
