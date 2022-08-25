@@ -25,9 +25,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
 
-    @Override
+    @Override                   //Add customer to db, returns 0 if failed, 1 if success
     public int insert(Customer object) {
-        return 0;
+        return newTunesDAO.addCustomer(object);
     }
     @Override
     public int update(Customer object) {
@@ -45,7 +45,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public List<Customer> findAll() {
         return newTunesDAO.getAllCustomers();
     }
-    @Override                   //Returns a single customer from the db with matching id
+    @Override                   //Returns a single customer from the db whose id matches searched id
     public Customer findById(Integer id) {
         return newTunesDAO.getCustomerById(id);
     }

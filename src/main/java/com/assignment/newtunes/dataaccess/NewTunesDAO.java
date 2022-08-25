@@ -133,4 +133,24 @@ public class NewTunesDAO {
         }
         return customers;
     }
+
+    // Add a customer to db using takes Customer as parameter
+    public int addCustomer(Customer customer){
+        String sql = "INSERT INTO customer (first_name, last_name, country, postal_code, phone, email)"+
+                "VALUES (?,?,?,?,?,?)";
+        int result = 0;
+        try (Connection con = DriverManager.getConnection(url, username, password)){
+            PreparedStatement ppsm = con.prepareStatement(sql);
+            ppsm.setString(1,customer.first_name());
+            ppsm.setString(2,customer.last_name());
+            ppsm.setString(3,customer.country());
+            ppsm.setString(4,customer.postal_code());
+            ppsm.setString(5,customer.phone_number());
+            ppsm.setString(6,customer.email());
+            result = ppsm.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
