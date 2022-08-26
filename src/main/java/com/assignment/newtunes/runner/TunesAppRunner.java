@@ -82,7 +82,8 @@ public class TunesAppRunner implements ApplicationRunner {
                 "2. Search customer with id",
                 "3. Search customer with name",
                 "4. Read a page of customers",
-                "5. Show country with most customers"
+                "5. Show country with most customers",
+                "6. Show highest spender"
         };
         Scanner scanner = new Scanner(System.in);
         int option=-1;
@@ -109,6 +110,12 @@ public class TunesAppRunner implements ApplicationRunner {
                     case 5:
                         System.out.println(custRepImpl.returnCountryWithMostCustomers().country() + " (" +
                                 custRepImpl.returnCountryWithMostCustomers().numberOfCustomers() + " customers)");
+                        break;
+                    case 6:
+                        System.out.println(
+                                custRepImpl.findById(custRepImpl.returnBiggestSpender().customerId()).first_name() +
+                                " " + custRepImpl.findById(custRepImpl.returnBiggestSpender().customerId()).last_name() +
+                                " (total: " + custRepImpl.returnBiggestSpender().spending() + ")");
                 }
             }catch (InputMismatchException ex){
                 System.out.println("Choose option: 1-" + options.length);
