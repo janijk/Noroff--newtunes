@@ -2,6 +2,7 @@ package com.assignment.newtunes.dataaccess;
 
 import com.assignment.newtunes.models.Customer;
 import com.assignment.newtunes.models.CustomerCountry;
+import com.assignment.newtunes.models.CustomerGenre;
 import com.assignment.newtunes.models.CustomerSpender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -206,5 +207,31 @@ public class NewTunesDAO {
             e.printStackTrace();
         }
         return customerSpender;
+    }
+
+    public CustomerGenre getCustomerMostPopularGenre(int customerId) {
+        String sql = "SELECT genre.\"name\" as genre_name, count(genre.\"name\") as cnt " +
+                "FROM invoice_line " +
+                "JOIN invoice " +
+                "ON invoice.invoice_id = invoice_line.invoice_id " +
+                "JOIN track " +
+                "ON invoice_line.track_id = track.track_id " +
+                "JOIN genre " +
+                "ON track.genre_id = genre.genre_id " +
+                "WHERE customer_id = 1 " +
+                "GROUP BY genre.name " +
+                "ORDER BY cnt DESC " +
+                "LIMIT 1";
+        CustomerGenre customerGenre = null;
+        try (Connection con = DriverManager.getConnection(url, username, password)) {
+            PreparedStatement ppsm = con.prepareStatement(sql);
+            ResultSet rs = ppsm.executeQuery();
+            while(rs.next()) {
+                customerGenre = new CustomerGenre(customerId, rs.getString("genre_name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customerGenre;
     }
 }

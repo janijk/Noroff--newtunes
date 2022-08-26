@@ -54,5 +54,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public CustomerSpender returnBiggestSpender() {
         return newTunesDAO.getBiggestSpender();
     }
-
+    @Override
+    public CustomerGenre returnCustomerMostPopularGenre(int customerId) {
+        return newTunesDAO.getCustomerMostPopularGenre(customerId);
+    }
 }

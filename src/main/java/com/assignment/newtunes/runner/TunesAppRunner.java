@@ -74,6 +74,21 @@ public class TunesAppRunner implements ApplicationRunner {
         }
     }
 
+    public void getMostPopularGenre(){     // Ask user for a customer id to search with
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Give customer id: ");
+        boolean cont = true;
+        while (cont){
+            try {
+                System.out.println(custRepImpl.returnCustomerMostPopularGenre(scanner.nextInt()).genre());
+                cont = false;
+            }catch (InputMismatchException ex){
+                System.out.print("Enter customer id as a number: ");
+                scanner.next();
+            }
+        }
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         String[] options = {
@@ -83,7 +98,8 @@ public class TunesAppRunner implements ApplicationRunner {
                 "3. Search customer with name",
                 "4. Read a page of customers",
                 "5. Show country with most customers",
-                "6. Show highest spender"
+                "6. Show highest spender",
+                "7. Show most popular genre for user"
         };
         Scanner scanner = new Scanner(System.in);
         int option=-1;
@@ -116,6 +132,10 @@ public class TunesAppRunner implements ApplicationRunner {
                                 custRepImpl.findById(custRepImpl.returnBiggestSpender().customerId()).first_name() +
                                 " " + custRepImpl.findById(custRepImpl.returnBiggestSpender().customerId()).last_name() +
                                 " (total: " + custRepImpl.returnBiggestSpender().spending() + ")");
+                        break;
+                    case 7:
+                        getMostPopularGenre();
+                        break;
                 }
             }catch (InputMismatchException ex){
                 System.out.println("Choose option: 1-" + options.length);
