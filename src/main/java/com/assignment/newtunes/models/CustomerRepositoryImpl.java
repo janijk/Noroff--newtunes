@@ -20,7 +20,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
     @Override
     public int update(Customer object) {
-        return 0;
+        return newTunesDAO.updateCustomer(object);
     }
     @Override
     public int delete(Customer object) {

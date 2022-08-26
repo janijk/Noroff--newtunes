@@ -153,4 +153,25 @@ public class NewTunesDAO {
         }
         return result;
     }
+
+    // Update customer information, takes Customer as parameter
+    public int updateCustomer(Customer customer) {
+        String sql = "UPDATE customer SET first_name = ?, last_name = ?, country = ?, postal_code = ?, " +
+                "phone = ?, email = ? WHERE customer_id = ?";
+        int result = 0;
+        try (Connection con = DriverManager.getConnection(url, username, password)){
+            PreparedStatement ppsm = con.prepareStatement(sql);
+            ppsm.setString(1,customer.first_name());
+            ppsm.setString(2,customer.last_name());
+            ppsm.setString(3,customer.country());
+            ppsm.setString(4,customer.postal_code());
+            ppsm.setString(5,customer.phone_number());
+            ppsm.setString(6,customer.email());
+            ppsm.setInt(7,customer.id());
+            result = ppsm.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
