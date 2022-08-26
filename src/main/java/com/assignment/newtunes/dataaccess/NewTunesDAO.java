@@ -2,6 +2,7 @@ package com.assignment.newtunes.dataaccess;
 
 import com.assignment.newtunes.models.Customer;
 import com.assignment.newtunes.models.CustomerCountry;
+import com.assignment.newtunes.models.CustomerSpender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -189,5 +190,21 @@ public class NewTunesDAO {
             e.printStackTrace();
         }
         return customerCountry;
+    }
+
+    public CustomerSpender getBiggestSpender() {
+        String sql = "SELECT customer_id, Sum(total) AS sum_total FROM invoice" +
+                " GROUP BY customer_id ORDER BY sum_total LIMIT 1";
+        CustomerSpender customerSpender = null;
+        try (Connection con = DriverManager.getConnection(url, username, password)) {
+            PreparedStatement ppsm = con.prepareStatement(sql);
+            ResultSet rs = ppsm.executeQuery();
+            while(rs.next()) {
+                customerSpender = new CustomerSpender(rs.getInt("customer_id"), rs.getInt("sum_total"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customerSpender;
     }
 }

@@ -50,5 +50,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public CustomerCountry returnCountryWithMostCustomers() {
         return newTunesDAO.getCountryByMostCustomers();
     }
+    @Override
+    public CustomerSpender returnBiggestSpender() {
+        return newTunesDAO.getBiggestSpender();
+    }
 
 }
