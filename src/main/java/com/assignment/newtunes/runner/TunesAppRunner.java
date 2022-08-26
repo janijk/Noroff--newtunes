@@ -81,7 +81,8 @@ public class TunesAppRunner implements ApplicationRunner {
                 "1. Read all customers",
                 "2. Search customer with id",
                 "3. Search customer with name",
-                "4. Read a page of customers"
+                "4. Read a page of customers",
+                "5. Show country with most customers"
         };
         Scanner scanner = new Scanner(System.in);
         int option=-1;
@@ -104,6 +105,10 @@ public class TunesAppRunner implements ApplicationRunner {
                         break;
                     case 4:
                         getAPageOfCustomers();
+                        break;
+                    case 5:
+                        System.out.println(custRepImpl.returnCountryWithMostCustomers().country() + " (" +
+                                custRepImpl.returnCountryWithMostCustomers().numberOfCustomers() + " customers)");
                 }
             }catch (InputMismatchException ex){
                 System.out.println("Choose option: 1-" + options.length);

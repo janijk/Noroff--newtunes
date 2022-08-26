@@ -1,6 +1,7 @@
 package com.assignment.newtunes.dataaccess;
 
 import com.assignment.newtunes.models.Customer;
+import com.assignment.newtunes.models.CustomerCountry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -173,5 +174,20 @@ public class NewTunesDAO {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public CustomerCountry getCountryByMostCustomers() {
+        String sql = "SELECT country, count(*) as cnt FROM customer GROUP BY country ORDER BY cnt DESC LIMIT 1";
+        CustomerCountry customerCountry = null;
+        try (Connection con = DriverManager.getConnection(url, username, password)) {
+            PreparedStatement ppsm = con.prepareStatement(sql);
+            ResultSet rs = ppsm.executeQuery();
+            while(rs.next()) {
+                customerCountry = new CustomerCountry(rs.getString("country"), rs.getInt("cnt"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customerCountry;
     }
 }
