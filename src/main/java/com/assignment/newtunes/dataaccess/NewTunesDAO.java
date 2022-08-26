@@ -30,7 +30,11 @@ public class NewTunesDAO {
         this.password = password;
     }
 
-    // Get all customers from db
+    /**
+     * Get all customers from db
+     *
+     * @return list of all customers
+      */
     public List<Customer> getAllCustomers(){
         String sql = "SELECT customer_id, first_name, last_name, country, postal_code, phone, email FROM customer";
         List<Customer> customers = new ArrayList<>();
@@ -55,7 +59,12 @@ public class NewTunesDAO {
         return customers;
     }
 
-    // Get a specific customer from db identified by customer id
+    /**
+     * Get a specific customer from db identified by customer id
+     *
+     * @param customerId id of a customer
+     * @return customer with proper id
+      */
     public Customer getCustomerById(int customerId){
         String sql = "SELECT customer_id, first_name, last_name, country, postal_code, phone, email "+
                 "FROM customer WHERE customer_id=?";
@@ -81,7 +90,12 @@ public class NewTunesDAO {
         return customer;
     }
 
-    // Get a specific customer(s) from db identified by customers %first name% or %last name%
+    /**
+     * Get a specific customer(s) from db identified by customers %first name% or %last name%
+     *
+     * @param customerName Name of customer to search
+     * @return List of customers with given name
+      */
     public List<Customer> getCustomerByName(String customerName){
         String sql = "SELECT customer_id, first_name, last_name, country, postal_code, phone, email "+
                 "FROM customer WHERE first_name LIKE ? OR last_name LIKE ?";
@@ -109,7 +123,13 @@ public class NewTunesDAO {
         return customers;
     }
 
-    // Fetch a page of customers from the db takes in limit and offset parameters
+    /**
+     * Fetch a page of customers from the db.
+     *
+     * @param limit How many customers to show
+     * @param offset From which row to start showing customers
+     * @return List of customers
+     */
     public List<Customer> getOnePageOfCustomers(int limit, int offset){
         String sql = "SELECT customer_id, first_name, last_name, country, postal_code, phone, email "+
                 "FROM customer ORDER BY customer_id LIMIT ? OFFSET ?";
@@ -137,7 +157,12 @@ public class NewTunesDAO {
         return customers;
     }
 
-    // Add a customer to db, takes Customer as parameter
+    /**
+     * Add a customer to db, takes Customer as parameter
+     *
+     * @param customer Customer to be added to db
+     * @return 0 if failed, 1 if success
+     */
     public int addCustomer(Customer customer){
         String sql = "INSERT INTO customer (first_name, last_name, country, postal_code, phone, email)"+
                 "VALUES (?,?,?,?,?,?)";
@@ -157,7 +182,12 @@ public class NewTunesDAO {
         return result;
     }
 
-    // Update customer information, takes Customer as parameter
+    /**
+     * Update customer information
+     *
+     * @param customer Customer to be updated
+     * @return 0 if failed, 1 if success
+     */
     public int updateCustomer(Customer customer) {
         String sql = "UPDATE customer SET first_name = ?, last_name = ?, country = ?, postal_code = ?, " +
                 "phone = ?, email = ? WHERE customer_id = ?";
@@ -178,6 +208,11 @@ public class NewTunesDAO {
         return result;
     }
 
+    /**
+     * Get the country with most customers associated with it
+     *
+     * @return CustomerCountry object
+     */
     public CustomerCountry getCountryByMostCustomers() {
         String sql = "SELECT country, count(*) as cnt FROM customer GROUP BY country ORDER BY cnt DESC LIMIT 1";
         CustomerCountry customerCountry = null;
@@ -193,6 +228,11 @@ public class NewTunesDAO {
         return customerCountry;
     }
 
+    /**
+     * Get the customer that has spent the most money
+     *
+     * @return CustomerSpender object
+     */
     public CustomerSpender getBiggestSpender() {
         String sql = "SELECT customer_id, Sum(total) AS sum_total FROM invoice" +
                 " GROUP BY customer_id ORDER BY sum_total LIMIT 1";
@@ -209,6 +249,13 @@ public class NewTunesDAO {
         return customerSpender;
     }
 
+    /**
+     * Get a customers most popular genre. Most popular in this context
+     * means the genre that corresponds to the most tracks from invoices associated to that customer.
+     *
+     * @param customerId Id of customer
+     * @return CustomerGenre object
+     */
     public CustomerGenre getCustomerMostPopularGenre(int customerId) {
         String sql = "SELECT genre.\"name\" as genre_name, count(genre.\"name\") as cnt " +
                 "FROM invoice_line " +

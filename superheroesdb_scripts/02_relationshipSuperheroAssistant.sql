@@ -1,0 +1,1 @@
+ALTER TABLE assistant ADD COLUMN hero_id int NOT NULL REFERENCES superhero;
