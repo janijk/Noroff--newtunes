@@ -18,13 +18,22 @@ public class TunesAppRunner implements ApplicationRunner {
         this.custRepImpl = cRepImpl;
     }
 
-    public static void menu(String[] options){  // Display options menu
+    /**
+     * Display options menu
+     *
+     * @param options Array containing possible options
+     */
+    public static void menu(String[] options){
         for (String option : options){
             System.out.println(option);
         }
         System.out.print("Choose your option 1-" + options.length + ": ");
     }
-    public void searchWithId(){     // Ask user for a customer id to search with
+
+    /**
+     * Ask user for a customer id to search with, then call method to find customer by id.
+     */
+    public void searchWithId(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Give customer id: ");
         boolean cont = true;
@@ -38,7 +47,11 @@ public class TunesAppRunner implements ApplicationRunner {
             }
         }
     }
-    public void searchWithName(){   // Ask user for a customer name to search with
+
+    /**
+     * Ask user for a customer name to search with, then call method to find customer by name.
+     */
+    public void searchWithName(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Give customer name: ");
         boolean cont = true;
@@ -53,7 +66,12 @@ public class TunesAppRunner implements ApplicationRunner {
             }
         }
     }
-    public void getAPageOfCustomers(){  // Ask user for how many rows of customers to fetch and at which row to start
+
+    /**
+     * Ask user for how many rows of customers to fetch and at which row to start,
+     * then call method to get a page of customers.
+     */
+    public void getAPageOfCustomers(){
         Scanner scanner = new Scanner(System.in);
         boolean cont = true;
         int rowsBegin = 0;
@@ -74,7 +92,10 @@ public class TunesAppRunner implements ApplicationRunner {
         }
     }
 
-    public void getMostPopularGenre(){     // Ask user for a customer id to search with
+    /**
+     * Ask user for a customer id to search with, then call method to find that users most popular genre.
+     */
+    public void getMostPopularGenre(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Give customer id: ");
         boolean cont = true;
