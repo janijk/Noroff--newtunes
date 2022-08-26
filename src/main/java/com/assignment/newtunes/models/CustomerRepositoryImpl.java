@@ -46,5 +46,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public List<Customer> returnOnePage(int amountOfRows, int beginningAtRow) {
         return newTunesDAO.getOnePageOfCustomers(amountOfRows,beginningAtRow);
     }
+    @Override
+    public CustomerCountry returnCountryWithMostCustomers() {
+        return newTunesDAO.getCountryByMostCustomers();
+    }
 
 }
